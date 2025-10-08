@@ -1,7 +1,9 @@
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
+import { Skeleton } from "@/components/ui/skeleton";
 import { ArrowUp, ArrowDown, Coffee, Home, ShoppingBag, Utensils, Target, Bell } from "lucide-react";
+import { useState, useEffect } from "react";
 
 const transactions = [
   { id: 1, name: "Morning Coffee", category: "Food & Drink", amount: -5.50, icon: Coffee, trend: "down" },
@@ -21,6 +23,84 @@ const reminders = [
 ];
 
 export const Dashboard = () => {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate loading data
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 1500);
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (loading) {
+    return (
+      <section className="py-24 px-4">
+        <div className="container mx-auto">
+          <div className="text-center mb-16 space-y-4">
+            <Skeleton className="h-12 w-96 mx-auto" />
+            <Skeleton className="h-6 w-[500px] mx-auto" />
+          </div>
+
+          <div className="grid lg:grid-cols-2 gap-6 max-w-6xl mx-auto">
+            <Card className="p-6">
+              <div className="flex items-center justify-between mb-6">
+                <Skeleton className="h-8 w-48" />
+                <Skeleton className="h-6 w-24" />
+              </div>
+              <div className="space-y-4">
+                {[1, 2, 3, 4].map((i) => (
+                  <div key={i} className="flex items-center justify-between p-3">
+                    <div className="flex items-center gap-3">
+                      <Skeleton className="h-10 w-10 rounded-full" />
+                      <div className="space-y-2">
+                        <Skeleton className="h-4 w-32" />
+                        <Skeleton className="h-3 w-24" />
+                      </div>
+                    </div>
+                    <Skeleton className="h-4 w-16" />
+                  </div>
+                ))}
+              </div>
+            </Card>
+
+            <Card className="p-6">
+              <div className="flex items-center gap-2 mb-6">
+                <Skeleton className="h-6 w-6 rounded" />
+                <Skeleton className="h-8 w-40" />
+              </div>
+              <div className="space-y-6">
+                {[1, 2].map((i) => (
+                  <div key={i} className="space-y-2">
+                    <div className="flex justify-between">
+                      <Skeleton className="h-4 w-32" />
+                      <Skeleton className="h-4 w-24" />
+                    </div>
+                    <Skeleton className="h-3 w-full" />
+                    <Skeleton className="h-3 w-24" />
+                  </div>
+                ))}
+                <Skeleton className="h-20 w-full rounded-lg" />
+              </div>
+            </Card>
+
+            <Card className="p-6 lg:col-span-2">
+              <div className="flex items-center gap-2 mb-6">
+                <Skeleton className="h-6 w-6 rounded" />
+                <Skeleton className="h-8 w-40" />
+              </div>
+              <div className="grid md:grid-cols-2 gap-4">
+                {[1, 2].map((i) => (
+                  <Skeleton key={i} className="h-24 w-full rounded-lg" />
+                ))}
+              </div>
+            </Card>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section className="py-24 px-4">
       <div className="container mx-auto">
